@@ -1,1 +1,100 @@
+public class Main {
+    public static void main(String[] args){
+        Arbol arbol = new Arbol();
+        Nodo raiz;
+        raiz=arbol.crearRaiz(null,15);
+        arbol.insertar(raiz, 8);
+        arbol.insertar(raiz, 1);
+        arbol.insertar(raiz, 82);
+        arbol.insertar(raiz, 2434);
+        arbol.insertar(raiz, 0);
+        arbol.insertar(raiz, 7);
+        arbol.mostrarArbol(raiz,0);
+        
+        System.out.println("RECORRIDO EN PRE ORDEN: ");
+        arbol.recorridoPreOrden(raiz);
+        System.out.println("\nRECORRIDO EN INORDEN: ");
+        arbol.recorridoInOrden(raiz);
+        System.out.println("\nRECORRIDOS EN POST ORDEN: ");
+        arbol.recorridoPostOrden(raiz);
+        
+    }
+}
 
+public class Nodo {
+    int dato;
+    Nodo anterior;
+    Nodo siguiente; 
+}
+
+public class Arbol {
+    
+    Nodo crearRaiz(Nodo raiz, int valor){
+        Nodo nuevo= new Nodo();
+        nuevo.dato=valor;
+        nuevo.anterior=null;
+        nuevo.siguiente=null;
+        return nuevo;
+    }
+    
+    void insertar(Nodo raiz, int dato){
+        Nodo aux;
+        Nodo pivote=null;
+        int bandera=0;
+        aux=raiz;
+        while(aux!=null){
+            pivote=aux;
+            if(dato>aux.dato){
+                aux=aux.siguiente;
+                bandera=1;
+            }else{
+                aux=aux.anterior;
+                bandera=0;                
+            }
+        }
+        aux=crearRaiz(pivote, dato);
+        if(bandera==1){
+            pivote.siguiente=aux;
+        }else{
+            pivote.anterior=aux;
+        }
+    }
+    
+    void mostrarArbol(Nodo raiz, int cont){
+        if(raiz==null){
+          //  System.out.println("ÁRBOL VACÍO");
+        }else{
+            mostrarArbol(raiz.siguiente, cont+1);
+            for (int i = 0; i < cont; i++) {
+                System.out.print("  ");
+            }
+            System.out.println(raiz.dato);
+            mostrarArbol(raiz.anterior, cont+1);
+        }
+    }
+    
+    void recorridoPreOrden(Nodo raiz){
+        if(raiz!=null){
+            System.out.print(" "+raiz.dato+" ");
+            recorridoPreOrden(raiz.anterior);
+            recorridoPreOrden(raiz.siguiente);
+        }
+    }
+    
+    void recorridoInOrden(Nodo raiz){
+        if(raiz!=null){
+            recorridoInOrden(raiz.anterior);
+            System.out.print(" "+raiz.dato+" ");
+            recorridoInOrden(raiz.siguiente);
+        }
+    }
+    
+    void recorridoPostOrden(Nodo raiz){
+        if(raiz!=null){
+            recorridoPostOrden(raiz.anterior);
+            recorridoPostOrden(raiz.siguiente);
+            System.out.print(" "+raiz.dato+" ");
+        }
+    }
+    
+}
