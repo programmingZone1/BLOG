@@ -1,1 +1,73 @@
+package Main;
+
+/**
+ *
+ * @author Usuario
+ */
+public class Main {
+    public static void main(String[] args){
+          Pila pila = new Pila();
+          pila.aleatorioSinRepetir();
+        pila.apilar(1);
+        pila.apilar(8);
+        pila.apilar(9);
+        pila.apilar(6);        
+        pila.desapilar();
+        pila.imprimir();
+         
+    }
+}
+
+public class Nodo {
+    int dato;
+    Nodo siguiente;
+}
+public class Pila {
+    Nodo inicio=null;
+        int[] aleatorioSinRepetir() {      
+        int cantidad=8,tam=17;
+        int arreglo[] = new int[cantidad];
+        //arreglo[i] = (int) (Math.random() * tam);
+        for (int i = 0; i < cantidad; i++) {
+            arreglo[i] = (int) (Math.random() * tam);
+            for (int j = 0; j < 1; j++) {
+                if (arreglo[i] == arreglo[j]) {
+                    i--;
+                }
+            }
+        }
+        for (int j = 0; j < cantidad; j++) {
+            System.out.println("aleatorio " + arreglo[j]);
+        }
+        return arreglo;
+    }
+    void apilar(int dato){
+        Nodo nuevo = new Nodo();
+        Nodo aux=inicio;
+        nuevo.dato=dato;
+        if(aux==null){
+            inicio=nuevo;
+        }else{
+            nuevo.siguiente=aux;
+            inicio=nuevo;
+        }        
+    }
+    
+    int desapilar(){
+       int dato=inicio.dato;
+       Nodo aux=inicio.siguiente;
+       inicio.siguiente=null;
+       inicio=aux;
+        System.out.println("desapilo "+dato);
+       return dato;
+    }
+    
+    void imprimir(){
+        Nodo aux=inicio;
+        while(aux!=null){
+            System.out.println(aux.dato);
+            aux=aux.siguiente;
+        }
+    }
+}
 
