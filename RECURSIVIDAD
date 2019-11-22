@@ -1,1 +1,19 @@
 
+public class Main {
+
+	public static void main(String[] args) {
+		Factorial fc = new Factorial();
+		System.out.println(fc.fact(6));
+	}
+
+}
+
+public class Factorial {
+	public int fact(int numero) {
+		if (numero == 0) {
+			return 1;
+		}else {
+			return numero * fact(numero-1);
+		}
+	}
+}
