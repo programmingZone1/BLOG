@@ -1,1 +1,111 @@
+public class Main {
+    public static void main(String[] args){
+        Shell lista= new Shell();
+        lista.insertar(10);
+        lista.insertar(9);
+        lista.insertar(1393);
+        lista.insertar(-3);
+        lista.insertar(0);
+        lista.insertar(42);
+        lista.insertar(7);
+        System.out.println("LISTA DESORDENADA: ");
+        lista.imprimir();
+        System.out.println("\nLISTA ORDENADA: ");
+        lista.shell();
+        lista.imprimir();
+               
+    }
+}
+
+public class Shell {
+    Nodo inicio=null;
+    Nodo fin=null;
+    
+    void insertar(int dato){
+        Nodo nuevo=new Nodo();
+        nuevo.dato=dato;
+        if(inicio==null){
+            inicio=nuevo;
+            fin=nuevo;            
+        }else{
+            fin.siguiente=nuevo;
+            nuevo.siguiente=null;
+            nuevo.anterior=fin;
+            fin=nuevo;
+        }
+    }
+    
+    void cambiarDato(Nodo izquierdo, Nodo derecho){
+        int aux;
+        aux=izquierdo.dato;
+        izquierdo.dato=derecho.dato;
+        derecho.dato=aux;                
+    }
+    
+    void shell(){
+        int cont=0;
+        Nodo aux=inicio;
+        if(aux!=null){
+            while(aux!=null){
+                aux=aux.siguiente;
+                cont++;
+            }
+            Nodo izquierdo;
+            Nodo derecho;
+            
+            int intervalo=cont/2;
+            
+            while(intervalo>0){
+                derecho=inicio;
+                for (int i = 0; i < intervalo; i++) {
+                    derecho=derecho.siguiente;
+                }
+                izquierdo=inicio;
+                while(derecho!=null){
+                    if(izquierdo.dato>derecho.dato){
+                        cambiarDato(izquierdo, derecho);
+                        shell2(izquierdo, intervalo);
+                    }
+                    derecho=derecho.siguiente;
+                    izquierdo=izquierdo.siguiente;
+                }
+                intervalo=intervalo/2;
+            }            
+        }
+    }
+    
+    void shell2(Nodo izquierdo, int k){
+        Nodo izquierdo2;
+        izquierdo2=izquierdo;
+        int cont=0;
+        
+        while((cont!=k)&&(izquierdo2!=null)){
+            izquierdo2=izquierdo2.anterior;
+            cont++;
+        }
+        
+        if(izquierdo2!=null){
+            if(izquierdo.dato<izquierdo2.dato){
+                cambiarDato(izquierdo2, izquierdo);
+                shell2(izquierdo2, k);
+            }
+        }        
+    }
+    
+    void imprimir(){
+        Nodo aux=inicio;
+        while(aux!=null){
+            System.out.print(aux.dato+" ");
+            aux=aux.siguiente;
+        }
+    }    
+    
+
+}
+
+public class Nodo {
+    int dato;
+    Nodo siguiente;
+    Nodo anterior;    
+}
 
