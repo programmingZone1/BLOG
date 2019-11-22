@@ -1,0 +1,134 @@
+package Main;
+
+/**
+ *
+ * @author Usuario
+ */
+public class Main {
+    public static void main(String[] args){
+        Lista lista =new Lista();
+//        lista.insertarInicio(8);
+//        lista.insertarInicio(10);
+//        lista.insertarInicio(2);
+//        lista.insertarInicio(7);
+        lista.insertarFinal(1);
+        lista.insertarFinal(9);
+        lista.insertarFinal(192);
+        lista.insertarFinal(0);
+        lista.insertarFinal(3);
+        //lista.eliminarInicio();
+        //lista.eliminarFinal();
+        lista.insertarMitad(6);
+        lista.eliminarMitad();
+        lista.imprimir();
+    }
+}
+public class Nodo {
+    int dato;
+    Nodo siguiente;
+}
+package Main;
+
+/**
+ *
+ * @author Usuario
+ */
+public class Lista {
+    Nodo inicio=null;
+    
+    void insertarInicio(int dato){
+        Nodo nuevo = new Nodo();
+        nuevo.dato=dato;
+        if(inicio==null){
+            inicio=nuevo;
+        }else{
+            nuevo.siguiente=inicio;
+            inicio=nuevo;
+        }
+    }
+    
+    void insertarFinal(int dato){
+        Nodo aux=inicio;
+        Nodo nuevo = new Nodo();
+        nuevo.dato=dato;
+        if(aux==null){
+            inicio=nuevo;
+        }else{
+            while(aux.siguiente!=null){
+                aux=aux.siguiente;
+            }
+            aux.siguiente=nuevo;
+        }
+    }
+    
+    void eliminarInicio(){
+        if(inicio!=null){
+            Nodo aux=inicio;
+            inicio=inicio.siguiente;
+            aux.siguiente=null;
+        }
+    }
+    
+    void eliminarFinal(){
+        if(inicio!=null){
+            Nodo anterior=null;
+            Nodo aux=inicio;
+            while(aux.siguiente!=null){
+                anterior=aux;
+                aux=aux.siguiente;
+            }
+            if(anterior==null){
+                inicio=null;
+            }else{
+                anterior.siguiente=null;
+            }
+        }
+    }
+    
+    int mitad(){
+        Nodo aux=inicio;
+        int cont=0;
+        while(aux!=null){
+            cont++;
+            aux=aux.siguiente;
+        }
+        return cont/2;
+    }
+    
+    void insertarMitad(int dato){
+        Nodo nuevo = new Nodo();
+        nuevo.dato=dato;
+        Nodo aux=inicio;
+        Nodo siguiente;
+        int cont=0;        
+        while(aux!=null && cont!=mitad()){
+            cont++;
+            aux=aux.siguiente;            
+        }
+        siguiente=aux.siguiente;
+        aux.siguiente=nuevo;
+        nuevo.siguiente=siguiente;                  
+    }
+    
+    void eliminarMitad(){
+        Nodo aux=inicio;
+        Nodo anterior=null;
+        int cont=0;
+        while(aux!=null && cont!=mitad()){
+            cont++;
+            anterior=aux;
+            aux=aux.siguiente;
+        }
+        Nodo siguiente=aux.siguiente;
+        anterior.siguiente=siguiente;
+        aux.siguiente=null;
+    }
+    
+    void imprimir(){
+        Nodo aux=inicio;
+        while(aux!=null){
+            System.out.print(aux.dato+" ");
+            aux=aux.siguiente;
+        }
+    }
+}
