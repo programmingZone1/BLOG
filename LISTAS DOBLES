@@ -1,1 +1,136 @@
 
+public class ListasDoblesMetodos {
+	Nodo inicio;
+	Nodo fin;
+	
+	public void insertInicio(int elemento) {
+		Nodo nuevo = new Nodo();
+		nuevo.dato = elemento;
+		nuevo.siguiente = null;
+		nuevo.anterior = null;
+		if (inicio == null) {
+			inicio = nuevo;
+			fin = nuevo;
+		}else {
+			inicio.anterior = nuevo;
+			nuevo.siguiente = inicio;
+			inicio = nuevo;
+		}
+	}
+	
+	public void insertFinal(int elemento) {
+		Nodo nuevo = new Nodo();
+		nuevo.dato = elemento;
+		nuevo.siguiente = null;
+		nuevo.anterior = null;
+		if (inicio == null) {
+			inicio = nuevo;
+			fin = nuevo;
+		}else {
+			fin.siguiente = nuevo;
+			nuevo.anterior = fin;
+			fin = nuevo;
+		}
+	}
+	
+	public void elimInicio() {
+		if (inicio!= null) {
+			inicio = inicio.siguiente;
+			inicio.anterior = null;
+		}
+	}
+	
+	public void elimFinal() {
+		if (inicio != null) {
+			fin = fin.anterior;
+			fin.siguiente = null;
+		}
+	}
+	
+	public void imprimir() {
+		Nodo aux = inicio;
+		while (aux != null) {
+			System.out.print(aux.dato + " ");
+			aux = aux.siguiente;
+		}
+		System.out.println(" ");
+	}
+	
+	public void insertMitad(int elemento) {
+		Nodo nuevo = new Nodo();
+		nuevo.dato = elemento;
+		nuevo.siguiente = null;
+		nuevo.anterior = null;
+		Nodo aux = inicio;
+		Nodo ant = null;
+		int cont = 0;
+		while (aux != null && cont != mitad()) {
+			cont++;
+			ant = aux;
+			aux = aux.siguiente;
+		}
+		aux.anterior = nuevo;
+		ant.siguiente = nuevo;
+		nuevo.anterior = ant;
+		nuevo.siguiente = aux;
+	}
+	
+	public void elimMitad() {
+		Nodo aux = inicio;
+		int cont = 0;
+		Nodo ant = null;
+		while (aux != null) {
+			if (cont == mitad()) {
+				ant.siguiente = aux.siguiente;
+				aux = aux.siguiente;
+				aux.anterior = ant;
+			}
+			cont++;
+			ant = aux;
+			aux = aux.siguiente;
+		}
+	}
+	
+	public int mitad() {
+		Nodo aux = inicio;
+		int cont = 0;
+		while (aux != null) {
+			cont++;
+			aux = aux.siguiente;
+		}
+		return cont/2;
+	}
+	
+	
+}
+
+class Nodo{
+	int dato;
+	Nodo siguiente;
+	Nodo anterior;
+
+public class Main {
+
+	public static void main(String[] args) {
+		ListasDoblesMetodos metodos = new ListasDoblesMetodos();
+		metodos.insertInicio(5);
+		metodos.imprimir();
+		metodos.insertInicio(10);
+		metodos.imprimir();
+		metodos.insertFinal(1);
+		metodos.imprimir();
+		metodos.insertFinal(0);
+		metodos.imprimir();
+		metodos.elimInicio();
+		metodos.imprimir();
+		metodos.elimFinal();
+		metodos.imprimir();
+		metodos.insertMitad(45);
+		metodos.imprimir();
+		metodos.elimMitad();
+		metodos.imprimir();
+	}
+	
+
+}
+
