@@ -1,1 +1,56 @@
+package Col;
+
+public class Main {
+
+	public static void main(String[] args) {
+		ColasMetodos col = new ColasMetodos();
+		col.encolar(5);
+		col.encolar(7);
+		col.imprimir();
+		col.descolar();
+		col.imprimir();
+	}
+
+}
+package Col;
+
+public class ColasMetodos {
+	Nodo inicio;
+	Nodo fin;
+	
+	public void encolar(int elemento) {
+		Nodo nuevo = new Nodo();
+		nuevo.dato = elemento;
+		nuevo.siguiente = null;
+		if (inicio == null) {
+			inicio = nuevo;
+			fin = nuevo;
+		}else {
+			fin.siguiente = nuevo;
+			fin = nuevo;
+		}
+	}
+	
+	public void descolar() {
+		Nodo aux = inicio;
+		inicio = inicio.siguiente;
+		aux.siguiente = null;
+	}
+	
+	public void imprimir() {
+		Nodo aux = inicio;
+		while (aux != null) {
+			System.out.print(aux.dato + " ");
+			aux = aux.siguiente;
+		}
+		System.out.println(" ");
+	}
+	
+	
+}
+
+class Nodo{
+	int dato;
+	Nodo siguiente;
+}
 
