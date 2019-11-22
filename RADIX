@@ -1,1 +1,141 @@
+public class Main {
+    public static void main(String[] args){
+        Lista lista = new Lista();
+        lista.insertar(10);
+        lista.insertar(1);
+        lista.insertar(89);
+        lista.insertar(300);        
+        lista.insertar(93);
+        lista.insertar(7);
+        lista.insertar(3);
+        System.out.println("LISTA DESORDENADA: ");
+        lista.imprimir();
+        System.out.println("\nLISTA ORDENADA: ");
+        lista.ordenarPorRadix();
+        lista.imprimir();
+    }
+}
+
+public class Lista {
+    Nodo inicio=null;
+    Nodo fin=null;
+    
+    void insertar(int dato){
+        Nodo nuevo = new Nodo();
+        nuevo.dato=dato;
+        nuevo.siguiente=null;
+        nuevo.anterior=null;
+        if(inicio==null){
+            inicio=nuevo;
+            fin=nuevo;
+        }else{
+            fin.siguiente=nuevo;
+            nuevo.anterior=fin;
+            fin=nuevo;                   
+        }
+    }
+    
+    Nodo sacarPivote(Nodo limIzquierdo, Nodo limDerecho){
+        int cont=0,cont2=0,mitad;
+        Nodo pivote=null,auxI=limIzquierdo,auxD=limDerecho;
+        
+        while(auxI!=auxD){
+            cont++;
+            auxI=auxI.siguiente;
+        }
+        mitad=cont/2;
+        auxI=limIzquierdo;
+        auxD=limDerecho;
+        
+        while(cont2<mitad){
+            cont2++;
+            auxI=auxI.siguiente;
+        }
+        pivote=auxI;
+        return pivote;        
+    }
+    
+    void cambiar(Nodo a, Nodo b){
+        int guardar;
+        /*
+        10 6 5
+        a    b
+        guardar=5
+        10 6 10
+        5 6 10
+        */        
+        guardar=b.dato;
+        b.dato=a.dato;
+        a.dato=guardar;        
+    }
+    
+    int posicion(Nodo buscar){
+        Nodo aux=inicio;
+        int cont=0;
+        while(aux!=buscar){
+            cont++;
+            aux=aux.siguiente;
+        }
+        return cont;
+    }
+    
+    void quickSort(Nodo principio, Nodo end){
+        Nodo izquierdo=principio;
+        Nodo derecho=end;
+        Nodo pivote=sacarPivote(principio,end);
+        
+        while(derecho!=pivote || izquierdo!=pivote){
+            
+            while(izquierdo.dato<pivote.dato){
+                izquierdo=izquierdo.siguiente;
+            }
+            
+            while(derecho.dato>pivote.dato){
+                derecho=derecho.anterior;
+            }
+            
+            if(derecho!=pivote && izquierdo!=pivote){
+                cambiar(derecho, izquierdo);
+                derecho=derecho.anterior;
+                izquierdo=izquierdo.siguiente;                
+            }else{
+                if(derecho==pivote && izquierdo==pivote){
+                    //no se hace nada, se saldría y se aplica la recursividad
+                }else{
+                    if(derecho==pivote){
+                        cambiar(derecho, izquierdo);
+                        pivote=izquierdo;
+                    }else{
+                        if(izquierdo==pivote){
+                            cambiar(derecho, izquierdo);
+                            pivote=derecho;
+                        }
+                    }
+                }
+            }
+            
+            if(posicion(principio)<posicion(derecho)){
+                quickSort(principio,pivote);
+            }
+            if(posicion(end)>posicion(izquierdo)){
+                quickSort(izquierdo.siguiente, end);
+            }            
+        }
+    }
+    
+    void imprimir(){
+        Nodo aux=inicio;
+        while(aux!=null){
+            System.out.print(aux.dato+" ");
+            aux=aux.siguiente;
+        }
+    }
+        
+}
+
+public class Nodo {
+    int dato;
+    Nodo siguiente;
+    Nodo anterior;
+}
 
